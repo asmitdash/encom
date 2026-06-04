@@ -1,0 +1,19 @@
+[package]
+name = "encom-models"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Model adapter trait and built-in providers (OpenAI, Anthropic, xAI, Gemini, Mistral, Cohere, Groq, DeepSeek, Ollama)."
+
+[dependencies]
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+async-trait.workspace = true
+reqwest.workspace = true
+futures.workspace = true
+tracing.workspace = true

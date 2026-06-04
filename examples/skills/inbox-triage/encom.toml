@@ -1,0 +1,8 @@
+name = "inbox-triage"
+description = "Triage unread email and propose replies."
+version = "0.1.0"
+entry = "index.ts"
+
+[permissions]
+network = ["api.gmail.com"]
+secrets = ["GMAIL_TOKEN"]

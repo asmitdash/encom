@@ -1,0 +1,36 @@
+# Rust
+/target
+**/*.rs.bk
+Cargo.lock.bak
+
+# Node
+node_modules
+dist
+.turbo
+.tsbuildinfo
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Encom local state
+/.encom/
+*.db
+*.db-journal
+
+# Secrets
+.env
+.env.local
+*.pem
+*.key
+
+# Build artifacts
+/build
+/out

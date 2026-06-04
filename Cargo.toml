@@ -1,0 +1,42 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/encom-core",
+    "crates/encom-cli",
+    "crates/encom-models",
+    "crates/encom-memory",
+    "crates/encom-skills",
+    "crates/encom-ipc",
+]
+
+[workspace.package]
+version = "0.0.1"
+edition = "2021"
+license = "MIT"
+authors = ["Asmit Dash <asmitdashin@gmail.com>"]
+repository = "https://github.com/asmitdash/encom"
+homepage = "https://github.com/asmitdash/encom"
+rust-version = "1.75"
+
+[workspace.dependencies]
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+anyhow = "1"
+thiserror = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "stream"] }
+rusqlite = { version = "0.31", features = ["bundled"] }
+async-trait = "0.1"
+futures = "0.3"
+uuid = { version = "1", features = ["v4", "serde"] }
+clap = { version = "4", features = ["derive"] }
+dirs = "5"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"
+panic = "abort"

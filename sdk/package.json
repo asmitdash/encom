@@ -1,0 +1,38 @@
+{
+  "name": "@asmitdash/encom",
+  "version": "0.0.1",
+  "description": "TypeScript SDK for authoring Encom skills.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test"
+  },
+  "license": "MIT",
+  "author": "Asmit Dash",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asmitdash/encom.git",
+    "directory": "sdk"
+  },
+  "bugs": "https://github.com/asmitdash/encom/issues",
+  "homepage": "https://github.com/asmitdash/encom#readme",
+  "keywords": ["encom", "agent", "ai", "llm", "skills", "sdk"],
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^22.0.0"
+  }
+}
