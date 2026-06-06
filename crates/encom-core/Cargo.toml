@@ -25,3 +25,6 @@ encom-models = { path = "../encom-models" }
 encom-memory = { path = "../encom-memory" }
 encom-skills = { path = "../encom-skills" }
 encom-ipc    = { path = "../encom-ipc" }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["full", "test-util"] }
