@@ -60,7 +60,7 @@ impl FrameReader {
         if n == 0 {
             return Ok(None);
         }
-        let trimmed = self.buf.trim_end_matches(|c| c == '\n' || c == '\r');
+        let trimmed = self.buf.trim_end_matches(['\n', '\r']);
         if trimmed.is_empty() {
             return Ok(None);
         }
