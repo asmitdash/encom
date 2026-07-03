@@ -4,7 +4,7 @@
 //! model adapters together. The `encom-cli` binary spawns one of these.
 
 use anyhow::{Context, Result};
-use encom_ipc::{bind, write_frame, FrameReader, Frame, DEFAULT_BIND};
+use encom_ipc::{bind, write_frame, Frame, FrameReader, DEFAULT_BIND};
 use std::path::PathBuf;
 use std::sync::Arc;
 use tokio::net::TcpStream;

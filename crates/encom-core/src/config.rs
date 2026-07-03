@@ -35,7 +35,9 @@ pub struct MemoryConfig {
     pub path: Option<String>,
 }
 
-fn default_memory_backend() -> String { "sqlite".into() }
+fn default_memory_backend() -> String {
+    "sqlite".into()
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct SkillsConfig {
@@ -62,7 +64,10 @@ impl Config {
             },
         );
         Config {
-            model: ModelConfig { default: "anthropic".into(), providers },
+            model: ModelConfig {
+                default: "anthropic".into(),
+                providers,
+            },
             memory: MemoryConfig::default(),
             skills: SkillsConfig::default(),
         }

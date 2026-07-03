@@ -83,14 +83,23 @@ async fn run_chat(addr: &str) -> Result<()> {
             break;
         }
 
-        write_frame(&mut wr, &Frame::Chat { text: trimmed.into() }).await?;
+        write_frame(
+            &mut wr,
+            &Frame::Chat {
+                text: trimmed.into(),
+            },
+        )
+        .await?;
         loop {
             match rd.next().await? {
                 Some(Frame::ChatChunk { text }) => {
                     print!("{text}");
                     std::io::stdout().flush().ok();
                 }
-                Some(Frame::ChatDone { input_tokens, output_tokens }) => {
+                Some(Frame::ChatDone {
+                    input_tokens,
+                    output_tokens,
+                }) => {
                     println!();
                     eprintln!("[done · in={input_tokens} out={output_tokens}]");
                     break;
@@ -116,7 +125,9 @@ fn config_path() -> Result<PathBuf> {
 }
 
 fn state_dir() -> Result<PathBuf> {
-    Ok(dirs::data_local_dir().context("no state dir")?.join("encom"))
+    Ok(dirs::data_local_dir()
+        .context("no state dir")?
+        .join("encom"))
 }
 
 fn load_or_default_config() -> Result<Config> {

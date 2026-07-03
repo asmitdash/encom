@@ -14,7 +14,11 @@ pub struct Anthropic {
 
 impl Anthropic {
     pub fn new(api_key: String, default_model: String) -> Self {
-        Self { api_key, default_model, client: reqwest::Client::new() }
+        Self {
+            api_key,
+            default_model,
+            client: reqwest::Client::new(),
+        }
     }
 }
 
@@ -44,7 +48,9 @@ struct UsageRaw {
 
 #[async_trait]
 impl ModelAdapter for Anthropic {
-    fn id(&self) -> &str { "anthropic" }
+    fn id(&self) -> &str {
+        "anthropic"
+    }
 
     async fn complete(&self, req: CompletionRequest) -> Result<CompletionResponse> {
         let model = req.model.as_deref().unwrap_or(&self.default_model);
@@ -54,11 +60,19 @@ impl ModelAdapter for Anthropic {
         for m in &req.messages {
             match m {
                 Message::System(c) => {
-                    if !system.is_empty() { system.push('\n'); }
+                    if !system.is_empty() {
+                        system.push('\n');
+                    }
                     system.push_str(c);
                 }
-                Message::User(c)      => msgs.push(AnthroMessage { role: "user",      content: c }),
-                Message::Assistant(c) => msgs.push(AnthroMessage { role: "assistant", content: c }),
+                Message::User(c) => msgs.push(AnthroMessage {
+                    role: "user",
+                    content: c,
+                }),
+                Message::Assistant(c) => msgs.push(AnthroMessage {
+                    role: "assistant",
+                    content: c,
+                }),
             }
         }
         let body = json!({
@@ -68,7 +82,8 @@ impl ModelAdapter for Anthropic {
             "max_tokens": req.max_tokens.unwrap_or(1024),
             "temperature": req.temperature.unwrap_or(0.7),
         });
-        let resp = self.client
+        let resp = self
+            .client
             .post("https://api.anthropic.com/v1/messages")
             .header("x-api-key", &self.api_key)
             .header("anthropic-version", "2023-06-01")
@@ -78,14 +93,19 @@ impl ModelAdapter for Anthropic {
             .error_for_status()?
             .json::<AnthroResponse>()
             .await?;
-        let text = resp.content.into_iter()
+        let text = resp
+            .content
+            .into_iter()
             .filter_map(|b| b.text)
             .next()
             .ok_or_else(|| anyhow!("no text block in response"))?;
         Ok(CompletionResponse {
             text,
             model: resp.model,
-            usage: resp.usage.map(|u| Usage { input_tokens: u.input_tokens, output_tokens: u.output_tokens }),
+            usage: resp.usage.map(|u| Usage {
+                input_tokens: u.input_tokens,
+                output_tokens: u.output_tokens,
+            }),
         })
     }
 }

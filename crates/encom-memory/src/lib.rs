@@ -25,7 +25,9 @@ pub struct Store {
 
 impl Store {
     pub fn open(path: &Path) -> Result<Self> {
-        if let Some(parent) = path.parent() { std::fs::create_dir_all(parent).ok(); }
+        if let Some(parent) = path.parent() {
+            std::fs::create_dir_all(parent).ok();
+        }
         let conn = Connection::open(path)?;
         conn.execute_batch(SCHEMA)?;
         Ok(Self { conn })
@@ -38,7 +40,13 @@ impl Store {
             "INSERT INTO memories (id, namespace, key, value, created_at) VALUES (?1, ?2, ?3, ?4, ?5)",
             params![id, namespace, key, value, created_at],
         )?;
-        Ok(Memory { id, namespace: namespace.into(), key: key.into(), value: value.into(), created_at })
+        Ok(Memory {
+            id,
+            namespace: namespace.into(),
+            key: key.into(),
+            value: value.into(),
+            created_at,
+        })
     }
 
     pub fn get_latest(&self, namespace: &str, key: &str) -> Result<Option<Memory>> {
@@ -50,8 +58,11 @@ impl Store {
         let row = stmt
             .query_row(params![namespace, key], |r| {
                 Ok(Memory {
-                    id: r.get(0)?, namespace: r.get(1)?, key: r.get(2)?,
-                    value: r.get(3)?, created_at: r.get(4)?,
+                    id: r.get(0)?,
+                    namespace: r.get(1)?,
+                    key: r.get(2)?,
+                    value: r.get(3)?,
+                    created_at: r.get(4)?,
                 })
             })
             .ok();

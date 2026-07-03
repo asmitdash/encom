@@ -10,7 +10,11 @@ pub struct Registry {
 }
 
 impl Registry {
-    pub fn new() -> Self { Self { adapters: HashMap::new() } }
+    pub fn new() -> Self {
+        Self {
+            adapters: HashMap::new(),
+        }
+    }
 
     pub fn insert(&mut self, adapter: Arc<dyn ModelAdapter>) {
         self.adapters.insert(adapter.id().to_string(), adapter);
@@ -22,7 +26,9 @@ impl Registry {
 }
 
 impl Default for Registry {
-    fn default() -> Self { Self::new() }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 /// Default registry with built-in providers wired up from environment variables.
@@ -34,9 +40,16 @@ pub fn default_registry() -> Registry {
         reg.insert(Arc::new(openai::OpenAi::new(key, "gpt-5".into())));
     }
     if let Ok(key) = std::env::var("ANTHROPIC_API_KEY") {
-        reg.insert(Arc::new(anthropic::Anthropic::new(key, "claude-opus-4-7".into())));
+        reg.insert(Arc::new(anthropic::Anthropic::new(
+            key,
+            "claude-opus-4-7".into(),
+        )));
     }
-    let ollama_host = std::env::var("OLLAMA_HOST").unwrap_or_else(|_| "http://localhost:11434".into());
-    reg.insert(Arc::new(ollama::Ollama::new(ollama_host, "llama3.3".into())));
+    let ollama_host =
+        std::env::var("OLLAMA_HOST").unwrap_or_else(|_| "http://localhost:11434".into());
+    reg.insert(Arc::new(ollama::Ollama::new(
+        ollama_host,
+        "llama3.3".into(),
+    )));
     reg
 }

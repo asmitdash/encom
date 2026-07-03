@@ -27,7 +27,10 @@ pub enum Frame {
     /// One streamed chunk of the assistant's response.
     ChatChunk { text: String },
     /// End-of-turn marker carrying token usage.
-    ChatDone { input_tokens: u32, output_tokens: u32 },
+    ChatDone {
+        input_tokens: u32,
+        output_tokens: u32,
+    },
     /// Recoverable, per-turn error. Connection stays open.
     Error { message: String },
 }
@@ -132,9 +135,7 @@ mod tests {
             Frame::Chat {
                 text: "hello".into(),
             },
-            Frame::ChatChunk {
-                text: "hi".into(),
-            },
+            Frame::ChatChunk { text: "hi".into() },
             Frame::ChatDone {
                 input_tokens: 1,
                 output_tokens: 2,

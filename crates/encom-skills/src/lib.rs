@@ -41,6 +41,9 @@ impl Skill {
         let raw = std::fs::read_to_string(&manifest_path)
             .with_context(|| format!("reading {}", manifest_path.display()))?;
         let manifest: Manifest = toml::from_str(&raw).context("parsing manifest")?;
-        Ok(Self { manifest, root: dir.to_path_buf() })
+        Ok(Self {
+            manifest,
+            root: dir.to_path_buf(),
+        })
     }
 }
